@@ -7,7 +7,7 @@ import cmd
 
 class HBNBCommand(cmd.Cmd):
 	""" hbnb command interpreter """
-	models = ["BaseModel", "Space"]
+	models = ["BaseModel", "User"]
 	objs = storage.all()
 	prompt = "(hbnb)"
 	def find_id(self, id):
@@ -26,11 +26,12 @@ class HBNBCommand(cmd.Cmd):
 		"""Quit command to exit the program"""
 		return True
 	def do_create(self, line):
-		""" creates a new instance of BaseModel """
+		""" creates a new instance of a class """
 		model, id = self.par(line)
 		if not self.err_handeld(model, 1):
 			return
-		new = BaseModel()
+		model = model + "()"
+		new = eval(model)
 		new.save()
 		print(new.id)
 	def par(self, line):
@@ -84,7 +85,8 @@ class HBNBCommand(cmd.Cmd):
 		model, id = self.par(line)
 		if not self.err_handeld(model, id):
 			return
-		print(BaseModel(**self.objs[model + "." + id]))
+		model2 = model + "(**self.objs[model + "." + id])"
+		print(eval(model2))
 	def do_destroy(self, line):
 		""" destroy an instance based on id """
 		model, id = self.par(line)
