@@ -106,9 +106,7 @@ class HBNBCommand(cmd.Cmd):
 		model, id, attr, val = self.up_par(line)
 		if not self.err_handeld(model, id) or not self.up_err(attr, val):
 			return
-		print(model, id, attr)
-		x = eval(val)
-		print(type(x))
+		self.objs[models + "." + id][attr] = eval(val)
 
 if __name__ == '__main__':
 	HBNBCommand().cmdloop()
