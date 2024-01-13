@@ -102,10 +102,10 @@ class HBNBCommand(cmd.Cmd):
 			print("** class doesn't exist **")
 			return
 		if model:
-			tmp = [str(f) for f in self.objs.values() if f.dict['__class__'] == model]
+			tmp = [str(f) for f in self.objs.values() if f.to_dict()['__class__'] == model]
 		else:
 			for model in self.models:
-				tmp = tmp + [str(f) for f in self.objs.values() if f.dict['__class__'] == model]
+				tmp = tmp + [str(f) for f in self.objs.values() if f.to_dict()['__class__'] == model]
 		print(tmp)
 	def do_update(self, line):
 		""" updates an instance based on class name an id """

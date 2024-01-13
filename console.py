@@ -8,7 +8,8 @@ import cmd
 
 class HBNBCommand(cmd.Cmd):
 	""" hbnb command interpreter """
-	models = ["BaseModel", "User"]
+	models = ["BaseModel", "User", "State", "Place", "City",\
+		  "Amenity", "Review"]
 	objs = storage.all()
 	prompt = "(hbnb)"
 	def find_id(self, id):

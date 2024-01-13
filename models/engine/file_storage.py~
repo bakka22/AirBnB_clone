@@ -9,13 +9,13 @@ from models.user import User
 class FileStorage():
 	""" file storage class """
 	__file_path = "storage.json"
-	__opjects = {}
+	__objects = {}
 	def all(self):
 		""" returns the dictionary __opjects """
-		return self.__opjects
+		return self.__objects
 	def new(self, obj):
 		""" sets in __opjects the opj with key <opj class name>.id """
-		self.__opjects[type(obj).__name__ + "." + obj.id] = obj
+		self.__objects[type(obj).__name__ + "." + obj.id] = obj
 	def save(self):
 		""" serialize __opjects to json file """
 		tmp = self.__objects
