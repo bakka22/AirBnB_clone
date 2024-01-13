@@ -47,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
 	def up_par(self, line):
 		""" parses line into four argumenst """
 		tmp = self.par(line)
-		line = line.split()
+		line = line.split(maxsplit=3)
 		if len(line) < 2:
 			return tmp + [None, None]
 		if len(line) >= 4:
@@ -115,8 +115,12 @@ class HBNBCommand(cmd.Cmd):
 		model, id, attr, val = self.up_par(line)
 		if not self.err_handeld(model, id) or not self.up_err(attr, val):
 			return
-		self.objs[model + "." + id][attr] = eval(val)
-		tmp = eval(model + "(**objs.[model + '.' + id])")
+		if val[0] == '"'
+			val = val.split('"')[1]
+			self.objs[model + "." + id][attr] = val
+		else:
+			self.objs[model + "." + id][attr] = eval(val)
+		tmp = eval(model + "(**self.objs[model + '.' + id])")
 		tmp.save()
 
 if __name__ == '__main__':
