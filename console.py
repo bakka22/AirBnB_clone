@@ -16,7 +16,7 @@ class HBNBCommand(cmd.Cmd):
 	models = ["BaseModel", "User", "State", "Place", "City",\
 		  "Amenity", "Review"]
 	objs = storage.all()
-	prompt = "(hbnb)"
+	prompt = "(hbnb) "
 	def find_id(self, id):
 		""" check availabilty of id """
 		for key in self.objs.keys():
