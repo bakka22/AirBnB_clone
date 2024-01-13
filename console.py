@@ -17,10 +17,10 @@ class HBNBCommand(cmd.Cmd):
 		  "Amenity", "Review"]
 	objs = storage.all()
 	prompt = "(hbnb) "
-	def find_id(self, id):
+	def find_id(self, id, model):
 		""" check availabilty of id """
 		for key in self.objs.keys():
-			if id == self.objs[key].id:
+			if id == self.objs[key].id and self.objs[key].to_dict()['__class__'] == model:
 				return 1
 		return 0
 	def do_EOF(self, line):
@@ -72,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
 		if not id:
 			print("** instance id missing **")
 			return 0
-		found = self.find_id(id)
+		found = self.find_id(id, model)
 		if id == 1:
 			found = 1
 		if not found:
@@ -112,7 +112,7 @@ class HBNBCommand(cmd.Cmd):
 			tmp = [str(f) for f in self.objs.values() if f.to_dict()['__class__'] == model]
 		else:
 			for model in self.models:
-				tmp = tmp + [str(f) for f in self.objs.values() if f.to_dict()['__class__'] == model]
+				tmp = tmp + [str(f) for f in self.objs.values()]
 		print(tmp)
 	def do_update(self, line):
 		""" updates an instance based on class name an id """
