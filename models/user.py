@@ -2,7 +2,7 @@
 """ user module """
 
 from models.base_model import BaseModel
-from models import storage
+import models
 
 class User(BaseModel):
 	""" User class """

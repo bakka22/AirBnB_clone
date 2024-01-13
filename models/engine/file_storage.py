@@ -3,26 +3,32 @@
 
 
 import json
-
+from models.base_model import BaseModel
+from models.user import User
 
 class FileStorage():
 	""" file storage class """
 	__file_path = "storage.json"
-	__opjects = {}
+	__objects = {}
 	def all(self):
 		""" returns the dictionary __opjects """
-		return self.__opjects
+		return self.__objects
 	def new(self, obj):
 		""" sets in __opjects the opj with key <opj class name>.id """
-		self.__opjects[type(obj).__name__ + "." + obj.id] = obj.to_dict()
+		self.__objects[type(obj).__name__ + "." + obj.id] = obj
 	def save(self):
 		""" serialize __opjects to json file """
+		tmp = self.__objects
+		tmp2 = {k :tmp[k].to_dict() for k in tmp.keys()}
 		with open(self.__file_path, "w") as f:
-			json.dump(self.__opjects, f)
+			json.dump(tmp2, f)
 	def reload(self):
 		""" deserializes the json file to __opjects """
 		try:
 			with open(self.__file_path, "r") as f:
-				self.__opjects = json.load(f)
+				tmp = json.load(f)
+				for i in tmp.values():
+					name = i["__class__"]
+					self.new(eval(name)(**i))
 		except (FileNotFoundError, json.decoder.JSONDecodeError):
 			pass
