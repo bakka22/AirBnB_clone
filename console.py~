@@ -2,12 +2,13 @@
 """ consle module """
 
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 import cmd
 
 class HBNBCommand(cmd.Cmd):
 	""" hbnb command interpreter """
-	models = ["BaseModel", "Space"]
+	models = ["BaseModel", "User"]
 	objs = storage.all()
 	prompt = "(hbnb)"
 	def find_id(self, id):
@@ -26,11 +27,12 @@ class HBNBCommand(cmd.Cmd):
 		"""Quit command to exit the program"""
 		return True
 	def do_create(self, line):
-		""" creates a new instance of BaseModel """
+		""" creates a new instance of a class """
 		model, id = self.par(line)
 		if not self.err_handeld(model, 1):
 			return
-		new = BaseModel()
+		model = model + "()"
+		new = eval(model)
 		new.save()
 		print(new.id)
 	def par(self, line):
@@ -84,7 +86,8 @@ class HBNBCommand(cmd.Cmd):
 		model, id = self.par(line)
 		if not self.err_handeld(model, id):
 			return
-		print(BaseModel(**self.objs[model + "." + id]))
+		model2 = model + "(**self.objs[model + '.' + id])"
+		print(eval(model2))
 	def do_destroy(self, line):
 		""" destroy an instance based on id """
 		model, id = self.par(line)
@@ -94,17 +97,27 @@ class HBNBCommand(cmd.Cmd):
 		storage.save()
 	def do_all(self, line):
 		""" prints all string representation of all instances """
+		tmp = []
 		model = self.par(line)[0]
-		if model is not None and model not in self.models:
+		if model and model not in self.models:
 			print("** class doesn't exist **")
 			return
-		print([str(BaseModel(**self.objs[f])) for f in self.objs.keys()])
+		if model:
+			model2 = model + "(**self.objs[f])"
+			tmp = [str(eval(model2)) for f in self.objs.keys() if self.objs[f]['__class__'] == model]
+		else:
+			for model in self.models:
+				model2 = model + "(**self.objs[f])"
+				tmp = tmp + [str(eval(model2)) for f in self.objs.keys() if self.objs[f]['__class__'] == model]
+		print(tmp)
 	def do_update(self, line):
 		""" updates an instance based on class name an id """
 		model, id, attr, val = self.up_par(line)
 		if not self.err_handeld(model, id) or not self.up_err(attr, val):
 			return
-		print(model, id, attr, val)
+		self.objs[model + "." + id][attr] = eval(val)
+		tmp = eval(model + "(**objs.[model + '.' + id])")
+		tmp.save()
 
 if __name__ == '__main__':
 	HBNBCommand().cmdloop()
