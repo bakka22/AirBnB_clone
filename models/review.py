@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+""" user module """
+
+from models.base_model import BaseModel
+import models
+
+class Review(BaseModel):
+	""" User class """
+	place_id = ""
+	user_id = ""
+	text = ""
+	def __init__(self, *args, **kwargs):
+		""" special __init__ method """
+		if kwargs:
+			super().__init__(**kwargs)
+		else:
+			super().__init__()
+
