@@ -1,0 +1,22 @@
+#!/usr/bin/python3
+""" test ModelBase """
+
+
+import unittest
+from models.engine.filestorage import FileStorage
+
+
+class FileStorage_Test(unittest.TestCase):
+	""" test BaseModel """
+
+	def test_inherit(self):
+		""" test inherit from base """
+		self.assertEqual(FileStorage.__bases__, (object, ))
+
+	def test_has_attr(self):
+		""" test presence of attr """
+		re = FileStorage()
+		self.assertTrue(hasattr(re, "__objects"), False)
+
+if __name__ == "__main__":
+	unittest.main()
