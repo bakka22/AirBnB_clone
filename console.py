@@ -25,6 +25,7 @@ class HBNBCommand(cmd.Cmd):
 		return 0
 	def do_EOF(self, line):
 		""" ctrl + D exits prompt """
+		print("")
 		return True
 	def emptyline(self):
 		""" an emptyline doesn't do anything """
