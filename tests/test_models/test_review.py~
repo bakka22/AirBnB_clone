@@ -3,22 +3,20 @@
 
 
 import unittest
-from models.amenity import Amenity
 from models.base_model import BaseModel
+from models.review import Review
 
-
-class amenity_Test(unittest.TestCase):
+class Review_Test(unittest.TestCase):
     """ test BaseModel """
 
     def test_inherit(self):
         """ test inherit from base """
-        self.assertEqual(amenity.__bases__, (BaseModel, ))
+        self.assertEqual(Review.__bases__, (BaseModel, ))
 
     def test_has_attr(self):
         """ test presence of attr """
-        re = Amenity()
+        re = Review()
         self.assertTrue(hasattr(re, "id"), True)
-
 
 if __name__ == "__main__":
     unittest.main()

@@ -6,7 +6,6 @@ import unittest
 from models.amenity import Amenity
 from models.base_model import BaseModel
 
-
 class amenity_Test(unittest.TestCase):
     """ test BaseModel """
 
@@ -18,7 +17,6 @@ class amenity_Test(unittest.TestCase):
         """ test presence of attr """
         re = Amenity()
         self.assertTrue(hasattr(re, "id"), True)
-
 
 if __name__ == "__main__":
     unittest.main()
