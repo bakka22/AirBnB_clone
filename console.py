@@ -68,7 +68,6 @@ class HBNBCommand(cmd.Cmd):
                         return False
                 if fun in funcs.keys() and args:
                     args = model + " " + str(args[0])
-                    args = args.replace(",", " ")
                     eval(funcs[fun] + "(args)")
                     return False
         print(f"*** Unknown syntax: {line}")
@@ -96,7 +95,11 @@ class HBNBCommand(cmd.Cmd):
 
     def up_par(self, line):
         """ parses line into four argumenst """
+        is_dict = re.search("{.+?}", line)
+        line = line.replace(",", " ")
         tmp = self.par(line)
+        if is_dict:
+            return tmp + [str(is_dict[0]), None]
         line = line.split(maxsplit=3)
         if len(line) < 2:
             return tmp + [None, None]
@@ -167,6 +170,12 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """ updates an instance based on class name an id """
         model, id, attr, val = self.up_par(line)
+        if attr and type(eval(attr)) == dict:
+            dic = eval(attr)
+            up = self.objs[model + "." + id].__dict__
+            for i in dic.keys():
+                up[i] = dic[i]
+            return False
         if not self.err_handeld(model, id) or not self.up_err(attr, val):
             return
         tmp = self.objs[model + "." + id]

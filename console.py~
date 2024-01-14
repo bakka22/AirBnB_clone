@@ -51,7 +51,8 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """ called when input is invalid """
-        funcs = {"show": "self.do_show", "create": "self.do_create", "all": "self.do_all",
+        funcs = {"show": "self.do_show", "create": "self.do_create",
+                 "all": "self.do_all",
                  "destroy": "self.do_destroy",
                  "update": "self.do_update", "count": "self.count"}
         model = re.search(r"^\w+?(?=\.)", line)
@@ -64,14 +65,14 @@ class HBNBCommand(cmd.Cmd):
                 if fun in funcs.keys():
                     if fun == "all" or fun == "count" or fun == "create":
                         eval(funcs[fun] + "(model)")
-                        return False                        
+                        return False
                 if fun in funcs.keys() and args:
                     args = model + " " + str(args[0])
-                    args = args.replace(",", " ")
                     eval(funcs[fun] + "(args)")
                     return False
         print(f"*** Unknown syntax: {line}")
         return False
+
     def do_create(self, line):
         """ creates a new instance of a class """
         model, id = self.par(line)
@@ -94,7 +95,12 @@ class HBNBCommand(cmd.Cmd):
 
     def up_par(self, line):
         """ parses line into four argumenst """
+        is_dict = re.search("{.+?}", line)
+        line = line.replace(",", " ")
         tmp = self.par(line)
+        if is_dict:
+            print(tmp + [str(is_dict[0]), None])
+            return tmp + [str(is_dict[0]), None]
         line = line.split(maxsplit=3)
         if len(line) < 2:
             return tmp + [None, None]
@@ -165,6 +171,14 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """ updates an instance based on class name an id """
         model, id, attr, val = self.up_par(line)
+        print(type(eval(attr)))
+        if attr and type(eval(attr)) == dict:
+            print("inside dict if")
+            dic = eval(attr)
+            up = self.objs[model + "." + id].__dict__
+            for i in dic.keys():
+                up[i] = dic[i]
+            return False
         if not self.err_handeld(model, id) or not self.up_err(attr, val):
             return
         tmp = self.objs[model + "." + id]
