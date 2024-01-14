@@ -51,12 +51,13 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """ called when input is invalid """
-        funcs = {"show": "self.do_show", "create": "self.do_create", "all":\
-                 "self.do_all", "destroy": "self.do_destroy",\
+        funcs = {"show": "self.do_show", "create": "self.do_create",
+                 "all": "self.do_all",
+                 "destroy": "self.do_destroy",
                  "update": "self.do_update", "count": "self.count"}
-        model = re.search("^\w+?(?=\.)" , line)
-        fun = re.search("(?<=\.)\w+?(?=\()" , line)
-        args = re.search("(?<=\().+?(?=\))" , line)
+        model = re.search(r"^\w+?(?=\.)", line)
+        fun = re.search(r"(?<=\.)\w+?(?=\()", line)
+        args = re.search(r"(?<=\().+?(?=\))", line)
         if model:
             model = str(model[0])
             if model in self.models and fun:
@@ -64,7 +65,7 @@ class HBNBCommand(cmd.Cmd):
                 if fun in funcs.keys():
                     if fun == "all" or fun == "count" or fun == "create":
                         eval(funcs[fun] + "(model)")
-                        return False                        
+                        return False
                 if fun in funcs.keys() and args:
                     args = model + " " + str(args[0])
                     args = args.replace(",", " ")
@@ -72,6 +73,7 @@ class HBNBCommand(cmd.Cmd):
                     return False
         print(f"*** Unknown syntax: {line}")
         return False
+
     def do_create(self, line):
         """ creates a new instance of a class """
         model, id = self.par(line)
