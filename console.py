@@ -133,8 +133,9 @@ class HBNBCommand(cmd.Cmd):
             print("** attribute name missing **")
             return 0
         if not val:
-            print("** value missing **")
-            return 0
+            if type(eval(attr)) != dict:
+                print("** value missing **")
+                return 0
         return 1
 
     def do_show(self, line=None):
@@ -170,14 +171,15 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """ updates an instance based on class name an id """
         model, id, attr, val = self.up_par(line)
+        if not self.err_handeld(model, id) or not self.up_err(attr, val):
+            return
         if attr and type(eval(attr)) == dict:
             dic = eval(attr)
             up = self.objs[model + "." + id].__dict__
             for i in dic.keys():
                 up[i] = dic[i]
+            self.objs[model + "." + id].save()
             return False
-        if not self.err_handeld(model, id) or not self.up_err(attr, val):
-            return
         tmp = self.objs[model + "." + id]
         if val[0] == '"':
             val = val.split('"')[1]
