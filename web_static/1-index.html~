@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Best School</title>
+		<style>
+			body {
+				margin:0px;
+				padding:0px;
+			     }
+			header {
+				 background:#FF0000;
+				 height:70px;
+				 width:100%;
+			       }
+			footer {
+				 background:#00FF00;
+				 height:60px;
+				 width:100%;
+				 position:fixed;
+				 bottom:0;
+				 line-height:60px;
+				 text-align:center;
+			       }
+		</style>
+	</head>
+	<body>
+		<header></header>
+
+		<footer>Best School</footer>
+	</body>
+</html>
