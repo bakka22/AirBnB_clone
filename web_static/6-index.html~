@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                <meta charset="utf-8">
+                <title>Best School</title>
+		<link rel="icon" href="images/icon.png">
+                <link rel="stylesheet" href="styles/6-common.css">
+                <link rel="stylesheet" href="styles/6-header.css">
+                <link rel="stylesheet" href="styles/6-footer.css"> 
+		<link rel="stylesheet" href="styles/6-filters.css"> 
+        </head>
+        <body>
+                <header></header>
+		<div class="container">
+			<section class="filters">
+				<div class="locations">
+					<h3>States</h3>
+					<h4> GE, KH...</h4>
+					<ul class="popover">
+						<li>
+							<h2>Khartoum</h2>
+							<ul>
+								<li>RSF</li>
+								<li>SAF</li>
+							</ul>
+						</li>
+						<li>
+							<h2>Gezira</h2>
+							<ul>
+								<li>RSF</li>
+								<li>Janja</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="amenities">
+					<h3>Amenities</h3>
+					<h4>TV, Couch...</h4>
+					<ul class="popover">
+						<li>TV</li>
+						<li>Kitchen</li>
+						<li>Iron</li>
+						<li>Internet</li>
+					</ul>
+				</div>
+				<botton>Search</botton>
+			</section>
+		</div>
+                <footer>Best School</footer>
+        </body>
+</html>
